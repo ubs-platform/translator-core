@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "build-publish": ""
+    "build-publish": "webpack && npm publish"
   },
   "author": "UBS (Ucsuz Bucaksiz Sistemler/Endless Systems)",
   "license": "ISC",

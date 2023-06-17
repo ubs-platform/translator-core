@@ -9,7 +9,9 @@
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "types": [],
-    "lib": ["ES2019","DOM"]
+    "lib": ["ES2017","DOM"],
+    "target": "ES2017",
+    "outDir": "./dist"
   },
   "include": ["**/*.ts"],
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],

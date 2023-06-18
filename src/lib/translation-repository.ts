@@ -16,7 +16,13 @@ import {
   TranslationStringMap,
 } from "./model/translation-part";
 import { EnvironmentController } from "./environment-controller";
-import { TranslationLazyloadHelper } from "./translation-lazyload-helper";
+import {
+  AsyncActionLazyloadHandler,
+  LinearActionLazyloadHandler,
+  RxActionLazyloadHandler,
+  TranslationLazyloadHelper,
+  TranslationPartLinears,
+} from "./translation-lazyload-helper";
 import { TranslatorText } from "./model";
 
 export class TranslationRepository {
@@ -60,14 +66,22 @@ export class TranslationRepository {
       const lists = this._lazyloadHelper.getList();
       await lists.forEach(async (a) => {
         const object = a.fetchObjects(this._currentLanguage!);
-        if (object instanceof Promise) {
-          this.registerParts(await object, this._currentLanguage!);
-        } else if (object instanceof Observable) {
-          object.subscribe((incomingObj) => {
-            this.registerParts(incomingObj, this._currentLanguage!);
-          });
+        if (a instanceof AsyncActionLazyloadHandler) {
+          this.registerParts(
+            await (object as Promise<TranslationPartLinears>),
+            this._currentLanguage!
+          );
+        } else if (a instanceof RxActionLazyloadHandler) {
+          (object as Observable<TranslationPartLinears>).subscribe(
+            (incomingObj) => {
+              this.registerParts(incomingObj, this._currentLanguage!);
+            }
+          );
         } else {
-          this.registerParts(object, this._currentLanguage!);
+          this.registerParts(
+            object as TranslationPartLinears,
+            this._currentLanguage!
+          );
         }
       });
     }

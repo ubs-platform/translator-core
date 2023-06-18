@@ -1,6 +1,6 @@
 {
   "name": "@ubs-platform/translator-core",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Javascript based translator",
   "main": "dist/index.js",
   "scripts": {

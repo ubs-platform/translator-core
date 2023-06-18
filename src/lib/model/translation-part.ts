@@ -1,6 +1,6 @@
 export type TranslationStringMap = { [key: string]: string };
 export interface TranslationPart {
-  prefix: string;
+  prefix?: string;
   // language: string;
   stringMap: TranslationStringMap;
 }

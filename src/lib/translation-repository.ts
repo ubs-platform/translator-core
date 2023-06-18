@@ -25,6 +25,10 @@ import {
 } from "./translation-lazyload-helper";
 import { TranslatorText } from "./model";
 
+/**
+ * The translation repository manages translations, translates incoming key and listens the language changes at environment controllers.
+ * and loads the translations by provided lazyload handlers
+ */
 export class TranslationRepository {
   private _collected: TranslationCollectedMap = {};
   private _changeDetected = new Subject<TranslationEvent>();
@@ -40,32 +44,62 @@ export class TranslationRepository {
       });
   }
 
+  /**
+   *
+   * @returns the current lazyload helper
+   */
   public getLazyloadHelper() {
     return this._lazyloadHelper;
   }
 
+  /**
+   * checks the language is registered
+   * @param lang requested language
+   * @returns `true` if registered, otherwise `false`
+   */
   public hasLanguage(lang: string) {
     return this._collected[lang] != null;
   }
 
+  /**
+   * returns the current language
+   * @returns the current language
+   */
   public getCurrentLanguage(): string | undefined {
     return this._currentLanguage;
   }
 
+  /**
+   *  Returns the observable listens any changes (translation part registration or language changes)
+   * @returns the observable listens any changes (translation part registration or language changes)
+   */
   public changeDetection() {
     return this._changeDetected.asObservable();
   }
 
+  /**
+   * Post operations after language changes
+   */
   private languageAfterSet() {
     this._changeDetected.next("LANGUAGE_CHANGE");
     this.tryToGetNeededThings();
   }
 
+  /**
+   * Loads the parts with lazyload handlers
+   */
   async tryToGetNeededThings() {
     if (this._currentLanguage) {
       const lists = this._lazyloadHelper.getList();
       await lists.forEach(async (a) => {
         const object = a.fetchObjects(this._currentLanguage!);
+        /**
+         * checking `object instanceof Promise`
+         * or `object instanceof Observables<🥔>` is risky
+         * because mixes the rxjs class references in this library and another project that uses this as depency
+         * [[https://imgflip.com/i/7ps2cv]]
+         * */
+
         if (a instanceof AsyncActionLazyloadHandler) {
           this.registerParts(
             await (object as Promise<TranslationPartLinears>),
@@ -87,6 +121,10 @@ export class TranslationRepository {
     }
   }
 
+  /**
+   * Changes the languages
+   * @param language
+   */
   private setLanguage(language: string) {
     console.debug(`TRANSLATOR: Language changed to ${language}`);
     this._currentLanguage = language;
@@ -94,6 +132,19 @@ export class TranslationRepository {
     this.tryToGetNeededThings();
   }
 
+  /**
+   * Registers parts.
+   * @param part Parts is like this
+   * ```
+      {
+          prefix: 'generic', // prefix is optional
+          stringMap: {
+            hello: 'Merhaba, {name}',
+          },
+        },
+   * ```
+   * @param lang the language that part should be registered into
+   */
   registerParts(part: TranslationPart | TranslationPart[], lang: string) {
     if (part instanceof Array) {
       this._registerParts(part, lang);
@@ -102,11 +153,21 @@ export class TranslationRepository {
     }
   }
 
+  /**
+   * registers parts (array)
+   * @param parts
+   * @param language
+   */
   private _registerParts(parts: TranslationPart[], language: string) {
     parts.forEach((a) => this._registerPart(a, language, false));
     this._changeDetected.next("PART_REGISTERED");
   }
 
+  /**
+   * registers parts (singular)
+   * @param parts
+   * @param language
+   */
   private _registerPart(part: TranslationPart, language: string, emit = true) {
     console.debug(`TRANSLATOR: Registering part`);
 
@@ -125,6 +186,11 @@ export class TranslationRepository {
     if (emit) this._changeDetected.next("PART_REGISTERED");
   }
 
+  /**
+   * Translates the text.
+   * @param translatorText The text, or with parameters. Accepts `string` or `{key: string; parameters?: TranslationParameter}`
+   * @returns The result. if there is no translation found, the text resulted with same
+   */
   getString(translatorText: TranslatorText): string {
     let parameters: TranslationParameter, key: string;
     if (typeof translatorText == "string") {
@@ -139,12 +205,12 @@ export class TranslationRepository {
     if (this._currentLanguage) {
       let languagePool = this._collected[this._currentLanguage];
       if (languagePool) {
-        let text = languagePool?.[key] || "";
+        let text = languagePool?.[key] || key;
         Object.entries(parameters)?.forEach(([key, value]) => {
           const keyNeutralized = `{${key}}`;
           text = text.split(keyNeutralized).join(value);
         });
-        return text || key;
+        return text;
       }
     }
     // console.warn(
@@ -153,6 +219,12 @@ export class TranslationRepository {
     return key;
   }
 
+  /**
+   * Returns the observer that sends the text when the language and translation part changes.
+   *
+   * @param translatorText
+   * @returns
+   */
   getStringListenChanges(translatorText: TranslatorText) {
     return merge(
       of(this.getString(translatorText)),

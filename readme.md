@@ -34,3 +34,14 @@ Rxjs is required for listening operations
 
 - [Linkedin](https://www.linkedin.com/in/huseyincgunduz/)
 - [Instagram: @hussainlobo](https://instagram.com/hussainlobo)
+
+## Changelogs
+
+### 1.0.5
+
+- Prefix is optional now
+- Comment lines are added and readme.md is updated
+
+### 1.0.0-4
+
+- Worked on get runnable

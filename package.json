@@ -5,14 +5,16 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc",
-    "build-publish": "tsc && npm publish"
+    "remove-current-build": "[ ! -e file ] || rm file",
+    "build": "npm run remove-current-build && tsc",
+    "build-publish": "npm run build && npm publish"
   },
   "author": "UBS (Ucsuz Bucaksiz Sistemler/Endless Systems)",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "^7.8.1"
+    "rxjs": "~7.5.0"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "jest": "^28.1.1",

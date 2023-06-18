@@ -1,4 +1,4 @@
-import { TranslationCollectedMap } from './model/translation-collected-map';
+import { TranslationCollectedMap } from "./model/translation-collected-map";
 import {
   Observable,
   ReplaySubject,
@@ -8,16 +8,16 @@ import {
   map,
   merge,
   of,
-} from 'rxjs';
-import { TranslationEvent } from './model/translation-event';
-import { TranslationParameter } from './model/translation-parameter';
+} from "rxjs";
+import { TranslationEvent } from "./model/translation-event";
+import { TranslationParameter } from "./model/translation-parameter";
 import {
   TranslationPart,
   TranslationStringMap,
-} from './model/translation-part';
-import { EnvironmentController } from './environment-controller';
-import { TranslationLazyloadHelper } from './translation-lazyload-helper';
-import { TranslatorText } from './model';
+} from "./model/translation-part";
+import { EnvironmentController } from "./environment-controller";
+import { TranslationLazyloadHelper } from "./translation-lazyload-helper";
+import { TranslatorText } from "./model";
 
 export class TranslationRepository {
   private _collected: TranslationCollectedMap = {};
@@ -51,7 +51,7 @@ export class TranslationRepository {
   }
 
   private languageAfterSet() {
-    this._changeDetected.next('LANGUAGE_CHANGE');
+    this._changeDetected.next("LANGUAGE_CHANGE");
     this.tryToGetNeededThings();
   }
 
@@ -90,7 +90,7 @@ export class TranslationRepository {
 
   private _registerParts(parts: TranslationPart[], language: string) {
     parts.forEach((a) => this._registerPart(a, language, false));
-    this._changeDetected.next('PART_REGISTERED');
+    this._changeDetected.next("PART_REGISTERED");
   }
 
   private _registerPart(part: TranslationPart, language: string, emit = true) {
@@ -105,15 +105,15 @@ export class TranslationRepository {
     }
 
     Object.entries(part.stringMap).forEach(([key, value]) => {
-      const keyPrefixed = [part.prefix, key].filter((a) => a).join('.');
+      const keyPrefixed = [part.prefix, key].filter((a) => a).join(".");
       collection[keyPrefixed] = value;
     });
-    if (emit) this._changeDetected.next('PART_REGISTERED');
+    if (emit) this._changeDetected.next("PART_REGISTERED");
   }
 
   getString(translatorText: TranslatorText): string {
     let parameters: TranslationParameter, key: string;
-    if (typeof translatorText == 'string') {
+    if (typeof translatorText == "string") {
       parameters = {};
       key = translatorText;
     } else {
@@ -125,7 +125,7 @@ export class TranslationRepository {
     if (this._currentLanguage) {
       let languagePool = this._collected[this._currentLanguage];
       if (languagePool) {
-        let text = languagePool?.[key] || '';
+        let text = languagePool?.[key] || "";
         Object.entries(parameters)?.forEach(([key, value]) => {
           const keyNeutralized = `{${key}}`;
           text = text.split(keyNeutralized).join(value);
@@ -144,7 +144,7 @@ export class TranslationRepository {
       of(this.getString(translatorText)),
       this._changeDetected.pipe(
         // filter((a) => a == 'PART_REGISTERED'),
-        map((a) => {
+        map((a: TranslationEvent) => {
           console.debug(`TRANSLATOR ${a}`);
           return this.getString(translatorText);
         })

@@ -1,6 +1,6 @@
 # UBS Translator (Core)
 
-This is an typescript library to managing translation operations. This library contains basic operations and
+This is an typescript library to managing translation operations. This library contains basic operations
 
 **⚠️ DOM manupilation and fetching by url are not included in core library.** Some wraps are needed for DOM manupilations. You can check the [existing wraps](#wraps). If not exist for framework you used, you can open a issue or contact us.
 
@@ -20,13 +20,15 @@ Rxjs is required for listening operations
 
 ## Wraps
 
-| Framework     | Status            | Official | Repository |
-| ------------- | ----------------- | -------- | ---------- |
-| Vanillia      | ❌ Not planned    |          |            |
-| Angular >= 14 | ⚙️ In Development | ✅ Yes   |            |
-| React         | ❌ Not planned    |          |            |
-| React Native  | ❌ Not planned    |          |            |
-| VueJS         | ❌ Not planned    |          |            |
+| Framework    | Status            | Official | Repository                                                       |
+| ------------ | ----------------- | -------- | ---------------------------------------------------------------- |
+| Vanillia     | ❌ Not planned    |          |                                                                  |
+| Angular 14   | ✅ 1.0.6          | ✅ Yes   | [Translator NGX](https://github.com/ubs-platform/translator-ngx) |
+| Angular 15   | ❌ Not planned    |          |                                                                  |
+| Angular 16   | ⚙️ In development | ✅ Yes   |                                                                  |
+| React        | ❌ Not planned    |          |                                                                  |
+| React Native | ❌ Not planned    |          |                                                                  |
+| VueJS        | ❌ Not planned    |          |                                                                  |
 
 ## Contact
 

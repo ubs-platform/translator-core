@@ -126,7 +126,6 @@ export class TranslationRepository {
    * @param language
    */
   private setLanguage(language: string) {
-    console.debug(`TRANSLATOR: Language changed to ${language}`);
     this._currentLanguage = language;
     this.languageAfterSet();
     this.tryToGetNeededThings();
@@ -169,8 +168,6 @@ export class TranslationRepository {
    * @param language
    */
   private _registerPart(part: TranslationPart, language: string, emit = true) {
-    console.debug(`TRANSLATOR: Registering part`);
-
     let collection: TranslationStringMap;
     if (this._collected[language]) {
       collection = this._collected[language];
@@ -231,7 +228,6 @@ export class TranslationRepository {
       this._changeDetected.pipe(
         // filter((a) => a == 'PART_REGISTERED'),
         map((a: TranslationEvent) => {
-          console.debug(`TRANSLATOR ${a}`);
           return this.getString(translatorText);
         })
       )

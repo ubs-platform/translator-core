@@ -20,15 +20,15 @@ Rxjs is required for listening operations
 
 ## Wraps
 
-| Framework    | Status            | Official | Repository                                                       |
-| ------------ | ----------------- | -------- | ---------------------------------------------------------------- |
-| Vanillia     | ❌ Not planned    |          |                                                                  |
-| Angular 14   | ✅ 1.0.6          | ✅ Yes   | [Translator NGX](https://github.com/ubs-platform/translator-ngx) |
-| Angular 15   | ❌ Not planned    |          |                                                                  |
-| Angular 16   | ⚙️ In development | ✅ Yes   |                                                                  |
-| React        | ❌ Not planned    |          |                                                                  |
-| React Native | ❌ Not planned    |          |                                                                  |
-| VueJS        | ❌ Not planned    |          |                                                                  |
+| Framework    | Status         | Official | Repository                                                       |
+| ------------ | -------------- | -------- | ---------------------------------------------------------------- |
+| Vanillia     | ❌ Not planned |          |                                                                  |
+| Angular 14   | 🪦 EOL (1.\*)  | ✅ Yes   | [Translator NGX](https://github.com/ubs-platform/translator-ngx) |
+| Angular 15   | ❌ Not planned |          |                                                                  |
+| Angular 16   | ✅ 2.\*        | ✅ Yes   | [Translator NGX](https://github.com/ubs-platform/translator-ngx) |
+| React        | ❌ Not planned |          |                                                                  |
+| React Native | ❌ Not planned |          |                                                                  |
+| VueJS        | ❌ Not planned |          |                                                                  |
 
 ## Contact
 
@@ -38,6 +38,14 @@ Rxjs is required for listening operations
 - [Instagram: @hussainlobo](https://instagram.com/hussainlobo)
 
 ## Changelogs
+
+### 1.0.7
+
+- `TranslationRepository.getString(TranslatorText)` accepts TranslatorText as null or undefined.
+
+### 1.0.6
+
+- Code optimisations and readme edits...
 
 ### 1.0.5
 

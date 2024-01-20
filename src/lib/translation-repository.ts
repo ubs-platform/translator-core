@@ -189,6 +189,8 @@ export class TranslationRepository {
    * @returns The result. if there is no translation found, the text resulted with same
    */
   getString(translatorText: TranslatorText): string {
+    if (!translatorText) return "";
+
     let parameters: TranslationParameter, key: string;
     if (typeof translatorText == "string") {
       parameters = {};

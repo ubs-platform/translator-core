@@ -1,6 +1,6 @@
-import { TranslationParameter } from './translation-parameter';
+import { TranslationParameter } from "./translation-parameter";
 
-export type TranslatorText = TranslatorTextDetail | string;
+export type TranslatorText = TranslatorTextDetail | string | null | undefined;
 
 export interface TranslatorTextDetail {
   key: string;

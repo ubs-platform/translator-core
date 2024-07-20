@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "remove-current-build": "[ ! -e file ] || rm file",
-    "build": "npm run remove-current-build && tsc",
+    "build": "tsc",
     "build-publish": "npm run build && npm publish"
   },
   "author": "UBS (Ucsuz Bucaksiz Sistemler/Endless Systems)",

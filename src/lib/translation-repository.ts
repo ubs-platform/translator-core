@@ -36,7 +36,7 @@ export class TranslationRepository {
   constructor(private _lazyloadHelper = new TranslationLazyloadHelper()) {
     EnvironmentController.getEnvironmentController()
       .getLanguage()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         this.setLanguage(a);
         this._lazyloadHelper.getOnUpdated().subscribe(() => {
           this.tryToGetNeededThings();
@@ -107,7 +107,7 @@ export class TranslationRepository {
           );
         } else if (a instanceof RxActionLazyloadHandler) {
           (object as Observable<TranslationPartLinears>).subscribe(
-            (incomingObj) => {
+            (incomingObj: any) => {
               this.registerParts(incomingObj, this._currentLanguage!);
             }
           );

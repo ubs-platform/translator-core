@@ -1,6 +1,6 @@
 {
   "name": "@ubs-platform/translator-core",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Javascript based translator",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "UBS (Ucsuz Bucaksiz Sistemler/Endless Systems)",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "~7.5.0"
+    "rxjs": "~7.8.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
